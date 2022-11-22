@@ -4,7 +4,6 @@ import static org.klojang.util.ArrayMethods.refIndexOf;
 import static org.klojang.util.ClassMethods.box;
 import static org.klojang.convert.Morph.stringify;
 
-import org.klojang.util.Bool;
 import org.klojang.util.ClassMethods;
 import org.klojang.util.NumberMethods;
 import org.klojang.util.TypeConversionException;

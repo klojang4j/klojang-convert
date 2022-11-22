@@ -5,7 +5,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 
 import org.klojang.check.Check;
-import org.klojang.util.Bool;
 import org.klojang.util.NumberMethods;
 import org.klojang.util.TypeConversionException;
 import org.klojang.invoke.BeanWriter;
