@@ -1,130 +1,23 @@
 package org.klojang.convert;
 
+import org.klojang.check.Check;
+
 import java.lang.reflect.Array;
 import java.nio.charset.StandardCharsets;
 import java.util.Collection;
-
-import org.klojang.check.Check;
-import org.klojang.util.NumberMethods;
-import org.klojang.util.TypeConversionException;
-import org.klojang.invoke.BeanWriter;
 
 import static org.klojang.check.CommonChecks.notNull;
 import static org.klojang.util.ClassMethods.*;
 
 /**
- * Performs a wide variety of type conversions. The conversions try to strike a
- * balance between being lenient without becoming outlandish or contrived. This class
- * is optionally used by the {@link BeanWriter} class to perform type conversions on
- * the values passed to its {@link BeanWriter#write(Object, String, Object) set}
- * method.
- * <style>
- * .td-morph { padding:2px 10px 2px 3px; border:1px solid #888; text-align:left;
- * font-family: arial; font-size:110%;}
- * </style>
- * <table>
- *   <thead>
- *     <tr>
- *       <th class='td-morph'>Target Type</th>
- *       <th class='td-morph'>Input Type</th>
- *       <th class='td-morph'>Return Value</th>
- *       <th class='td-morph'>Remarks</th>
- *     </tr>
- *   </thead>
- *   <tbody>
- *    <tr>
- *      <td class='td-morph'>primitive</td>
- *      <td class='td-morph'>null</td>
- *      <td class='td-morph'>0, 0L, false, '\0', etc.</td>
- *      <td class='td-morph'>primitive default of the target type</td>
- *    </tr>
- *    <tr>
- *      <td class='td-morph'>T</td>
- *      <td class='td-morph'>null</td>
- *      <td class='td-morph'>null</td>
- *      <td class='td-morph'>&nbsp;</td>
- *    </tr>
- *    <tr>
- *      <td class='td-morph'>T</td>
- *      <td class='td-morph'>extends T</td>
- *      <td class='td-morph'>input</td>
- *      <td class='td-morph'>input value returned as-is</td>
- *    </tr>
- *    <tr>
- *      <td class='td-morph'>primitive (e.g. float)</td>
- *      <td class='td-morph'>wrapper (e.g. Float)</td>
- *      <td class='td-morph'>(float) input</td>
- *      <td class='td-morph'>simple cast of the input value</td>
- *    </tr>
- *    <tr>
- *      <td class='td-morph'>String</td>
- *      <td class='td-morph'>byte[&nbsp;]</td>
- *      <td class='td-morph'>new String(input, UTF_8)</td>
- *      <td class='td-morph'>&nbsp;</td>
- *    </tr>
- *    <tr>
- *      <td class='td-morph'>String</td>
- *      <td class='td-morph'>char[&nbsp;]</td>
- *      <td class='td-morph'>new String(input)</td>
- *      <td class='td-morph'>&nbsp;</td>
- *    </tr>
- *    <tr>
- *      <td class='td-morph'>String</td>
- *      <td class='td-morph'>other</td>
- *      <td class='td-morph'>input.toString()</td>
- *      <td class='td-morph'>&nbsp;</td>
- *    </tr>
- *    <tr>
- *      <td class='td-morph'>T[&nbsp;]</td>
- *      <td class='td-morph'>U[&nbsp;]</td>
- *      <td class='td-morph'>T[&nbsp;]</td>
- *      <td class='td-morph'>morph U elements to T (recursive call)</td>
- *    </tr>
- *    <tr>
- *      <td class='td-morph'>T[&nbsp;]</td>
- *      <td class='td-morph'>Collection&gt;U&gt;</td>
- *      <td class='td-morph'>T[&nbsp;]</td>
- *      <td class='td-morph'>morph U elements to T (recursive call)</td>
- *    </tr>
- *    <tr>
- *      <td class='td-morph'>T[&nbsp;]</td>
- *      <td class='td-morph'>IntList</td>
- *      <td class='td-morph'>T[&nbsp;]</td>
- *      <td class='td-morph'>morph int elements to T (recursive call)</td>
- *    </tr>
- *    <tr>
- *      <td class='td-morph'>byte[&nbsp;]</td>
- *      <td class='td-morph'>String</td>
- *      <td class='td-morph'>input.getBytes(UTF_8)</td>
- *      <td class='td-morph'>&nbsp;</td>
- *    </tr>
- *    <tr>
- *      <td class='td-morph'>char[&nbsp;]</td>
- *      <td class='td-morph'>String</td>
- *      <td class='td-morph'>input.toCharArray()</td>
- *      <td class='td-morph'>&nbsp;</td>
- *    </tr>
- *    <tr>
- *      <td class='td-morph'>T[&nbsp;]</td>
- *      <td class='td-morph'>U</td>
- *      <td class='td-morph'>new T[] { convert(u, T.class) }</td>
- *      <td class='td-morph'>single-element array (recursive call)</td>
- *    </tr>
- *    <tr>
- *      <td class='td-morph'>Collection&lt;T&gt;></td>
- *      <td class='td-morph'>U</td>
- *      <td class='td-morph'>new T[] { convert(u, T.class) }</td>
- *      <td class='td-morph'>single-element array (recursive call)</td>
- *    </tr>
- *   </tbody>
- * </table>
+ * Performs a wide variety of type conversions.
  *
  * @param <T> The type to which incoming values will be converted
  * @author Ayco Holleman
  * @see NumberMethods#convert(Number, Class)
  * @see NumberMethods#parse(String, Class)
  * @see Bool
- * @see org.klojang.util.util.EnumParser
+ * @see EnumParser
  */
 @SuppressWarnings({"unchecked", "rawtypes"})
 public class Morph<T> {

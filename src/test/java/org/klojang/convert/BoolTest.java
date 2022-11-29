@@ -1,7 +1,6 @@
 package org.klojang.convert;
 
 import org.junit.Test;
-import org.klojang.util.TypeConversionException;
 
 import java.io.ByteArrayOutputStream;
 

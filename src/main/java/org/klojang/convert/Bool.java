@@ -2,9 +2,6 @@ package org.klojang.convert;
 
 import java.util.Set;
 
-import org.klojang.util.NumberMethods;
-import org.klojang.util.TypeConversionException;
-
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 

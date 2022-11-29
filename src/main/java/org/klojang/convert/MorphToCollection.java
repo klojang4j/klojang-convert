@@ -1,15 +1,13 @@
 package org.klojang.convert;
 
+import org.klojang.util.CollectionMethods;
 import org.klojang.util.InvokeMethods;
-import org.klojang.util.TypeConversionException;
 
 import java.lang.reflect.Array;
 import java.util.*;
 import java.util.function.Function;
 import java.util.function.IntFunction;
 import java.util.function.Supplier;
-
-import static org.klojang.util.InvokeMethods.copyArrayElements;
 
 @SuppressWarnings({"rawtypes", "unchecked"})
 final class MorphToCollection {
@@ -89,6 +87,16 @@ final class MorphToCollection {
       collection.add(obj);
     }
     return collection;
+  }
+
+  @SuppressWarnings({"unchecked", "rawtypes"})
+  private static void copyArrayElements(Object fromArray,
+      Collection<?> toCollection) {
+    if (fromArray instanceof Object[] objs) {
+      ((Collection) toCollection).addAll(Arrays.asList(objs));
+    } else {
+      ((Collection) toCollection).addAll(CollectionMethods.listify(fromArray));
+    }
   }
 
 }

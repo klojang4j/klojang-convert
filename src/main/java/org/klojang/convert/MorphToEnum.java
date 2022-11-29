@@ -2,11 +2,7 @@ package org.klojang.convert;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import java.util.OptionalInt;
-
-import org.klojang.util.NumberMethods;
-import org.klojang.util.util.EnumParser;
 
 @SuppressWarnings({"rawtypes", "unchecked"})
 final class MorphToEnum {
