@@ -218,9 +218,11 @@ public final class NumberMethods {
    *
    * @param s the string to be parsed
    * @return the {@code int} value represented by the string
+   * @throws TypeConversionException if the string does not represent or number,
+   *     or if conversion would lead to loss of information
    */
   public static int parseInt(String s) throws TypeConversionException {
-<span class="fc" id="L223">    return (int) parseIntegral(s, int.class, Integer.MIN_VALUE, Integer.MAX_VALUE);</span>
+<span class="fc" id="L225">    return (int) parseIntegral(s, int.class, Integer.MIN_VALUE, Integer.MAX_VALUE);</span>
   }
 
   /**
@@ -233,7 +235,7 @@ public final class NumberMethods {
    *     causing integer overflow
    */
   public static boolean isInt(String s) {
-<span class="fc" id="L236">    return isIntegral(s, Integer.MIN_VALUE, Integer.MAX_VALUE);</span>
+<span class="fc" id="L238">    return isIntegral(s, Integer.MIN_VALUE, Integer.MAX_VALUE);</span>
   }
 
   /**
@@ -246,7 +248,7 @@ public final class NumberMethods {
    *     the string
    */
   public static OptionalInt toInt(String s) {
-<span class="fc" id="L249">    return toIntegral(s, Integer.MIN_VALUE, Integer.MAX_VALUE);</span>
+<span class="fc" id="L251">    return toIntegral(s, Integer.MIN_VALUE, Integer.MAX_VALUE);</span>
   }
 
   /**
@@ -256,21 +258,23 @@ public final class NumberMethods {
    *
    * @param s the string to be parsed
    * @return the {@code long} value represented by the string
+   * @throws TypeConversionException if the string does not represent or number,
+   *     or if conversion would lead to loss of information
    */
   public static long parseLong(String s) throws TypeConversionException {
-<span class="fc bfc" id="L261" title="All 2 branches covered.">    if (!isEmpty(s)) {</span>
+<span class="fc bfc" id="L265" title="All 2 branches covered.">    if (!isEmpty(s)) {</span>
       BigDecimal bd;
       try {
-<span class="fc" id="L264">        bd = new BigDecimal(s);</span>
-<span class="fc" id="L265">      } catch (NumberFormatException e) {</span>
-<span class="fc" id="L266">        throw new TypeConversionException(s, long.class, e.toString());</span>
-<span class="fc" id="L267">      }</span>
-<span class="fc bfc" id="L268" title="All 2 branches covered.">      if (fitsIntoLong(bd)) {</span>
-<span class="fc" id="L269">        return bd.longValue();</span>
+<span class="fc" id="L268">        bd = new BigDecimal(s);</span>
+<span class="fc" id="L269">      } catch (NumberFormatException e) {</span>
+<span class="fc" id="L270">        throw new TypeConversionException(s, long.class, e.toString());</span>
+<span class="fc" id="L271">      }</span>
+<span class="fc bfc" id="L272" title="All 2 branches covered.">      if (fitsIntoLong(bd)) {</span>
+<span class="fc" id="L273">        return bd.longValue();</span>
       }
-<span class="fc" id="L271">      throw TypeConversionException.targetTypeTooNarrow(s, long.class);</span>
+<span class="fc" id="L275">      throw TypeConversionException.targetTypeTooNarrow(s, long.class);</span>
     }
-<span class="fc" id="L273">    throw new TypeConversionException(s, long.class);</span>
+<span class="fc" id="L277">    throw new TypeConversionException(s, long.class);</span>
   }
 
   /**
@@ -283,13 +287,13 @@ public final class NumberMethods {
    *     causing integer overflow
    */
   public static boolean isLong(String s) {
-<span class="fc bfc" id="L286" title="All 2 branches covered.">    if (!isEmpty(s)) {</span>
+<span class="fc bfc" id="L290" title="All 2 branches covered.">    if (!isEmpty(s)) {</span>
       try {
-<span class="fc" id="L288">        return fitsIntoLong(new BigDecimal(s));</span>
-<span class="nc" id="L289">      } catch (NumberFormatException ignored) {</span>
+<span class="fc" id="L292">        return fitsIntoLong(new BigDecimal(s));</span>
+<span class="nc" id="L293">      } catch (NumberFormatException ignored) {</span>
       }
     }
-<span class="fc" id="L292">    return false;</span>
+<span class="fc" id="L296">    return false;</span>
   }
 
   /**
@@ -302,16 +306,16 @@ public final class NumberMethods {
    *     the string
    */
   public static OptionalLong toLong(String s) {
-<span class="fc bfc" id="L305" title="All 2 branches covered.">    if (!isEmpty(s)) {</span>
+<span class="fc bfc" id="L309" title="All 2 branches covered.">    if (!isEmpty(s)) {</span>
       try {
-<span class="fc" id="L307">        BigDecimal bd = new BigDecimal(s);</span>
-<span class="fc bfc" id="L308" title="All 2 branches covered.">        if (fitsIntoLong(bd)) {</span>
-<span class="fc" id="L309">          return OptionalLong.of(bd.longValue());</span>
+<span class="fc" id="L311">        BigDecimal bd = new BigDecimal(s);</span>
+<span class="fc bfc" id="L312" title="All 2 branches covered.">        if (fitsIntoLong(bd)) {</span>
+<span class="fc" id="L313">          return OptionalLong.of(bd.longValue());</span>
         }
-<span class="fc" id="L311">      } catch (NumberFormatException ignored) {</span>
-<span class="fc" id="L312">      }</span>
+<span class="fc" id="L315">      } catch (NumberFormatException ignored) {</span>
+<span class="fc" id="L316">      }</span>
     }
-<span class="fc" id="L314">    return OptionalLong.empty();</span>
+<span class="fc" id="L318">    return OptionalLong.empty();</span>
   }
 
   /**
@@ -321,22 +325,24 @@ public final class NumberMethods {
    *
    * @param s the string to be parsed
    * @return the {@code double} value represented by the string
+   * @throws TypeConversionException if the string does not represent or number,
+   *     or if conversion would lead to loss of information
    */
   public static double parseDouble(String s) throws TypeConversionException {
-<span class="fc bfc" id="L326" title="All 2 branches covered.">    if (!isEmpty(s)) {</span>
+<span class="fc bfc" id="L332" title="All 2 branches covered.">    if (!isEmpty(s)) {</span>
       BigDecimal bd;
       try {
-<span class="fc" id="L329">        bd = new BigDecimal(s);</span>
-<span class="fc" id="L330">      } catch (NumberFormatException e) {</span>
-<span class="fc" id="L331">        throw new TypeConversionException(s, double.class, e.toString());</span>
-<span class="fc" id="L332">      }</span>
-<span class="fc" id="L333">      BigDecimal x = bd.abs();</span>
-<span class="fc bfc" id="L334" title="All 4 branches covered.">      if (x.compareTo(MIN_DOUBLE_BD) &gt;= 0 &amp;&amp; x.compareTo(</span>
+<span class="fc" id="L335">        bd = new BigDecimal(s);</span>
+<span class="fc" id="L336">      } catch (NumberFormatException e) {</span>
+<span class="fc" id="L337">        throw new TypeConversionException(s, double.class, e.toString());</span>
+<span class="fc" id="L338">      }</span>
+<span class="fc" id="L339">      BigDecimal x = bd.abs();</span>
+<span class="fc bfc" id="L340" title="All 4 branches covered.">      if (x.compareTo(MIN_DOUBLE_BD) &gt;= 0 &amp;&amp; x.compareTo(</span>
           MAX_DOUBLE_BD) &lt;= 0) {
-<span class="fc" id="L336">        return bd.doubleValue();</span>
+<span class="fc" id="L342">        return bd.doubleValue();</span>
       }
     }
-<span class="fc" id="L339">    throw TypeConversionException.targetTypeTooNarrow(s, float.class);</span>
+<span class="fc" id="L345">    throw TypeConversionException.targetTypeTooNarrow(s, float.class);</span>
   }
 
   /**
@@ -349,14 +355,14 @@ public final class NumberMethods {
    *     {@code double}
    */
   public static boolean isDouble(String s) {
-<span class="fc bfc" id="L352" title="All 2 branches covered.">    if (!isEmpty(s)) {</span>
+<span class="fc bfc" id="L358" title="All 2 branches covered.">    if (!isEmpty(s)) {</span>
       try {
-<span class="fc" id="L354">        parseDouble(s);</span>
-<span class="fc" id="L355">        return true;</span>
-<span class="fc" id="L356">      } catch (TypeConversionException ignored) {</span>
+<span class="fc" id="L360">        parseDouble(s);</span>
+<span class="fc" id="L361">        return true;</span>
+<span class="fc" id="L362">      } catch (TypeConversionException ignored) {</span>
       }
     }
-<span class="fc" id="L359">    return false;</span>
+<span class="fc" id="L365">    return false;</span>
   }
 
   /**
@@ -369,13 +375,13 @@ public final class NumberMethods {
    *     of the string
    */
   public static OptionalDouble toDouble(String s) {
-<span class="fc bfc" id="L372" title="All 2 branches covered.">    if (!isEmpty(s)) {</span>
+<span class="fc bfc" id="L378" title="All 2 branches covered.">    if (!isEmpty(s)) {</span>
       try {
-<span class="fc" id="L374">        return OptionalDouble.of(parseDouble(s));</span>
-<span class="fc" id="L375">      } catch (TypeConversionException ignored) {</span>
+<span class="fc" id="L380">        return OptionalDouble.of(parseDouble(s));</span>
+<span class="fc" id="L381">      } catch (TypeConversionException ignored) {</span>
       }
     }
-<span class="fc" id="L378">    return OptionalDouble.empty();</span>
+<span class="fc" id="L384">    return OptionalDouble.empty();</span>
   }
 
   /**
@@ -385,21 +391,23 @@ public final class NumberMethods {
    *
    * @param s the string to be parsed
    * @return the {@code float} value represented by the string
+   * @throws TypeConversionException if the string does not represent or number,
+   *     or if conversion would lead to loss of information
    */
   public static float parseFloat(String s) throws TypeConversionException {
-<span class="fc bfc" id="L390" title="All 2 branches covered.">    if (!isEmpty(s)) {</span>
+<span class="fc bfc" id="L398" title="All 2 branches covered.">    if (!isEmpty(s)) {</span>
       BigDecimal bd;
       try {
-<span class="fc" id="L393">        bd = new BigDecimal(s);</span>
-<span class="fc" id="L394">      } catch (NumberFormatException e) {</span>
-<span class="fc" id="L395">        throw new TypeConversionException(s, double.class, e.toString());</span>
-<span class="fc" id="L396">      }</span>
-<span class="fc" id="L397">      BigDecimal x = bd.abs();</span>
-<span class="fc bfc" id="L398" title="All 4 branches covered.">      if (x.compareTo(BIG_MIN_FLOAT) &gt;= 0 &amp;&amp; x.compareTo(BIG_MAX_FLOAT) &lt;= 0) {</span>
-<span class="fc" id="L399">        return bd.floatValue();</span>
+<span class="fc" id="L401">        bd = new BigDecimal(s);</span>
+<span class="fc" id="L402">      } catch (NumberFormatException e) {</span>
+<span class="fc" id="L403">        throw new TypeConversionException(s, double.class, e.toString());</span>
+<span class="fc" id="L404">      }</span>
+<span class="fc" id="L405">      BigDecimal x = bd.abs();</span>
+<span class="fc bfc" id="L406" title="All 4 branches covered.">      if (x.compareTo(BIG_MIN_FLOAT) &gt;= 0 &amp;&amp; x.compareTo(BIG_MAX_FLOAT) &lt;= 0) {</span>
+<span class="fc" id="L407">        return bd.floatValue();</span>
       }
     }
-<span class="fc" id="L402">    throw TypeConversionException.targetTypeTooNarrow(s, float.class);</span>
+<span class="fc" id="L410">    throw TypeConversionException.targetTypeTooNarrow(s, float.class);</span>
   }
 
   /**
@@ -412,14 +420,14 @@ public final class NumberMethods {
    *     {@code float}
    */
   public static boolean isFloat(String s) {
-<span class="fc bfc" id="L415" title="All 2 branches covered.">    if (!isEmpty(s)) {</span>
+<span class="fc bfc" id="L423" title="All 2 branches covered.">    if (!isEmpty(s)) {</span>
       try {
-<span class="fc" id="L417">        parseFloat(s);</span>
-<span class="fc" id="L418">        return true;</span>
-<span class="fc" id="L419">      } catch (TypeConversionException ignored) {</span>
+<span class="fc" id="L425">        parseFloat(s);</span>
+<span class="fc" id="L426">        return true;</span>
+<span class="fc" id="L427">      } catch (TypeConversionException ignored) {</span>
       }
     }
-<span class="fc" id="L422">    return false;</span>
+<span class="fc" id="L430">    return false;</span>
   }
 
   /**
@@ -432,13 +440,13 @@ public final class NumberMethods {
    *     of the string
    */
   public static OptionalDouble toFloat(String s) {
-<span class="fc bfc" id="L435" title="All 2 branches covered.">    if (!isEmpty(s)) {</span>
+<span class="fc bfc" id="L443" title="All 2 branches covered.">    if (!isEmpty(s)) {</span>
       try {
-<span class="fc" id="L437">        return OptionalDouble.of(parseFloat(s));</span>
-<span class="fc" id="L438">      } catch (TypeConversionException ignored) {</span>
+<span class="fc" id="L445">        return OptionalDouble.of(parseFloat(s));</span>
+<span class="fc" id="L446">      } catch (TypeConversionException ignored) {</span>
       }
     }
-<span class="fc" id="L441">    return OptionalDouble.empty();</span>
+<span class="fc" id="L449">    return OptionalDouble.empty();</span>
   }
 
   /**
@@ -448,9 +456,11 @@ public final class NumberMethods {
    *
    * @param s the string to be parsed
    * @return the {@code short} value represented by the string
+   * @throws TypeConversionException if the string does not represent or number,
+   *     or if conversion would lead to loss of information
    */
   public static short parseShort(String s) throws TypeConversionException {
-<span class="fc" id="L453">    return (short) parseIntegral(s, short.class, Short.MIN_VALUE, Short.MAX_VALUE);</span>
+<span class="fc" id="L463">    return (short) parseIntegral(s, short.class, Short.MIN_VALUE, Short.MAX_VALUE);</span>
   }
 
   /**
@@ -463,7 +473,7 @@ public final class NumberMethods {
    *     causing integer overflow
    */
   public static boolean isShort(String s) {
-<span class="fc" id="L466">    return isIntegral(s, Short.MIN_VALUE, Short.MAX_VALUE);</span>
+<span class="fc" id="L476">    return isIntegral(s, Short.MIN_VALUE, Short.MAX_VALUE);</span>
   }
 
   /**
@@ -476,7 +486,7 @@ public final class NumberMethods {
    *     the string
    */
   public static OptionalInt toShort(String s) {
-<span class="fc" id="L479">    return toIntegral(s, Short.MIN_VALUE, Short.MAX_VALUE);</span>
+<span class="fc" id="L489">    return toIntegral(s, Short.MIN_VALUE, Short.MAX_VALUE);</span>
   }
 
   /**
@@ -486,9 +496,11 @@ public final class NumberMethods {
    *
    * @param s the string to be parsed
    * @return the {@code byte} value represented by the string
+   * @throws TypeConversionException if the string does not represent or number,
+   *     or if conversion would lead to loss of information
    */
   public static byte parseByte(String s) throws TypeConversionException {
-<span class="fc" id="L491">    return (byte) parseIntegral(s, byte.class, Byte.MIN_VALUE, Byte.MAX_VALUE);</span>
+<span class="fc" id="L503">    return (byte) parseIntegral(s, byte.class, Byte.MIN_VALUE, Byte.MAX_VALUE);</span>
   }
 
   /**
@@ -501,7 +513,7 @@ public final class NumberMethods {
    *     causing an integer overflow
    */
   public static boolean isByte(String s) {
-<span class="fc" id="L504">    return isIntegral(s, Byte.MIN_VALUE, Byte.MAX_VALUE);</span>
+<span class="fc" id="L516">    return isIntegral(s, Byte.MIN_VALUE, Byte.MAX_VALUE);</span>
   }
 
   /**
@@ -514,7 +526,7 @@ public final class NumberMethods {
    *     the string
    */
   public static OptionalInt toByte(String s) {
-<span class="fc" id="L517">    return toIntegral(s, Byte.MIN_VALUE, Byte.MAX_VALUE);</span>
+<span class="fc" id="L529">    return toIntegral(s, Byte.MIN_VALUE, Byte.MAX_VALUE);</span>
   }
 
   /**
@@ -524,20 +536,22 @@ public final class NumberMethods {
    *
    * @param s the string to be parsed
    * @return the {@code BigInteger} value represented by the string
+   * @throws TypeConversionException if the string does not represent or number,
+   *     or if conversion would lead to loss of information
    */
-  public static BigInteger parseBigInteger(String s) {
-<span class="pc bpc" id="L529" title="1 of 2 branches missed.">    if (!isEmpty(s)) {</span>
+  public static BigInteger parseBigInteger(String s) throws TypeConversionException {
+<span class="pc bpc" id="L543" title="1 of 2 branches missed.">    if (!isEmpty(s)) {</span>
       try {
-<span class="fc" id="L531">        BigDecimal bd = new BigDecimal(s);</span>
-<span class="fc bfc" id="L532" title="All 2 branches covered.">        if (isRound(bd)) {</span>
-<span class="fc" id="L533">          return bd.toBigInteger();</span>
+<span class="fc" id="L545">        BigDecimal bd = new BigDecimal(s);</span>
+<span class="fc bfc" id="L546" title="All 2 branches covered.">        if (isRound(bd)) {</span>
+<span class="fc" id="L547">          return bd.toBigInteger();</span>
         }
-<span class="fc" id="L535">        throw TypeConversionException.targetTypeTooNarrow(s, BigInteger.class);</span>
-<span class="fc" id="L536">      } catch (NumberFormatException e) {</span>
-<span class="fc" id="L537">        throw new TypeConversionException(s, BigInteger.class, e.toString());</span>
+<span class="fc" id="L549">        throw TypeConversionException.targetTypeTooNarrow(s, BigInteger.class);</span>
+<span class="fc" id="L550">      } catch (NumberFormatException e) {</span>
+<span class="fc" id="L551">        throw new TypeConversionException(s, BigInteger.class, e.toString());</span>
       }
     }
-<span class="nc" id="L540">    throw new TypeConversionException(s, BigInteger.class);</span>
+<span class="nc" id="L554">    throw new TypeConversionException(s, BigInteger.class);</span>
   }
 
   /**
@@ -549,16 +563,16 @@ public final class NumberMethods {
    * @return whether he specified string can be parsed into a {@code BigInteger}
    */
   public static boolean isBigInteger(String s) {
-<span class="fc bfc" id="L552" title="All 2 branches covered.">    if (!isEmpty(s)) {</span>
+<span class="fc bfc" id="L566" title="All 2 branches covered.">    if (!isEmpty(s)) {</span>
       try {
-<span class="fc" id="L554">        BigDecimal bd = new BigDecimal(s);</span>
-<span class="fc bfc" id="L555" title="All 2 branches covered.">        if (isRound(bd)) {</span>
-<span class="fc" id="L556">          return true;</span>
+<span class="fc" id="L568">        BigDecimal bd = new BigDecimal(s);</span>
+<span class="fc bfc" id="L569" title="All 2 branches covered.">        if (isRound(bd)) {</span>
+<span class="fc" id="L570">          return true;</span>
         }
-<span class="nc" id="L558">      } catch (NumberFormatException ignored) {</span>
-<span class="fc" id="L559">      }</span>
+<span class="nc" id="L572">      } catch (NumberFormatException ignored) {</span>
+<span class="fc" id="L573">      }</span>
     }
-<span class="fc" id="L561">    return false;</span>
+<span class="fc" id="L575">    return false;</span>
   }
 
   /**
@@ -571,16 +585,16 @@ public final class NumberMethods {
    *     of the string
    */
   public static Optional&lt;BigInteger&gt; toBigInteger(String s) {
-<span class="fc bfc" id="L574" title="All 2 branches covered.">    if (!isEmpty(s)) {</span>
+<span class="fc bfc" id="L588" title="All 2 branches covered.">    if (!isEmpty(s)) {</span>
       try {
-<span class="fc" id="L576">        BigDecimal bd = new BigDecimal(s);</span>
-<span class="fc bfc" id="L577" title="All 2 branches covered.">        if (isRound(bd)) {</span>
-<span class="fc" id="L578">          return Optional.of(bd.toBigInteger());</span>
+<span class="fc" id="L590">        BigDecimal bd = new BigDecimal(s);</span>
+<span class="fc bfc" id="L591" title="All 2 branches covered.">        if (isRound(bd)) {</span>
+<span class="fc" id="L592">          return Optional.of(bd.toBigInteger());</span>
         }
-<span class="nc" id="L580">      } catch (NumberFormatException ignored) {</span>
-<span class="fc" id="L581">      }</span>
+<span class="nc" id="L594">      } catch (NumberFormatException ignored) {</span>
+<span class="fc" id="L595">      }</span>
     }
-<span class="fc" id="L583">    return Optional.empty();</span>
+<span class="fc" id="L597">    return Optional.empty();</span>
   }
 
   /**
@@ -589,12 +603,13 @@ public final class NumberMethods {
    *
    * @param s the string to be parsed
    * @return the {@code BigDecimal} value represented by the string
+   * @throws TypeConversionException if the string does not represent or number
    */
-  public static BigDecimal parseBigDecimal(String s) {
+  public static BigDecimal parseBigDecimal(String s) throws TypeConversionException {
     try {
-<span class="fc" id="L595">      return new BigDecimal(s);</span>
-<span class="fc" id="L596">    } catch (NumberFormatException e) {</span>
-<span class="fc" id="L597">      throw new TypeConversionException(s, BigDecimal.class, e.toString());</span>
+<span class="fc" id="L610">      return new BigDecimal(s);</span>
+<span class="fc" id="L611">    } catch (NumberFormatException e) {</span>
+<span class="fc" id="L612">      throw new TypeConversionException(s, BigDecimal.class, e.toString());</span>
     }
   }
 
@@ -607,14 +622,14 @@ public final class NumberMethods {
    * @return whether he specified string can be parsed into a {@code BigDecimal}
    */
   public static boolean isBigDecimal(String s) {
-<span class="fc bfc" id="L610" title="All 2 branches covered.">    if (!isEmpty(s)) {</span>
+<span class="fc bfc" id="L625" title="All 2 branches covered.">    if (!isEmpty(s)) {</span>
       try {
-<span class="fc" id="L612">        parseBigDecimal(s);</span>
-<span class="fc" id="L613">        return true;</span>
-<span class="fc" id="L614">      } catch (TypeConversionException ignored) {</span>
+<span class="fc" id="L627">        parseBigDecimal(s);</span>
+<span class="fc" id="L628">        return true;</span>
+<span class="fc" id="L629">      } catch (TypeConversionException ignored) {</span>
       }
     }
-<span class="fc" id="L617">    return false;</span>
+<span class="fc" id="L632">    return false;</span>
   }
 
   /**
@@ -627,13 +642,13 @@ public final class NumberMethods {
    *     of the string
    */
   public static Optional&lt;BigDecimal&gt; toBigDecimal(String s) {
-<span class="fc bfc" id="L630" title="All 2 branches covered.">    if (!isEmpty(s)) {</span>
+<span class="fc bfc" id="L645" title="All 2 branches covered.">    if (!isEmpty(s)) {</span>
       try {
-<span class="fc" id="L632">        return Optional.of(parseBigDecimal(s));</span>
-<span class="fc" id="L633">      } catch (TypeConversionException ignored) {</span>
+<span class="fc" id="L647">        return Optional.of(parseBigDecimal(s));</span>
+<span class="fc" id="L648">      } catch (TypeConversionException ignored) {</span>
       }
     }
-<span class="fc" id="L636">    return Optional.empty();</span>
+<span class="fc" id="L651">    return Optional.empty();</span>
   }
 
   /**
@@ -645,16 +660,18 @@ public final class NumberMethods {
    * @param s the string to be parsed
    * @param targetType the class of the {@code Number} type
    * @return a {@code Number} of the specified type
+   * @throws TypeConversionException if the string does not represent or number,
+   *     or if conversion would lead to loss of information
    */
   @SuppressWarnings(&quot;unchecked&quot;)
   public static &lt;T extends Number&gt; T parse(String s, Class&lt;T&gt; targetType)
       throws TypeConversionException {
-<span class="fc" id="L652">    Check.notNull(targetType, &quot;target type&quot;);</span>
-<span class="fc" id="L653">    Function&lt;String, Number&gt; parser = parsers.get(targetType);</span>
-<span class="fc bfc" id="L654" title="All 2 branches covered.">    if (parser != null) {</span>
-<span class="fc" id="L655">      return (T) parser.apply(s);</span>
+<span class="fc" id="L669">    Check.notNull(targetType, &quot;target type&quot;);</span>
+<span class="fc" id="L670">    Function&lt;String, Number&gt; parser = parsers.get(targetType);</span>
+<span class="fc bfc" id="L671" title="All 2 branches covered.">    if (parser != null) {</span>
+<span class="fc" id="L672">      return (T) parser.apply(s);</span>
     }
-<span class="fc" id="L657">    throw notSupported(s, targetType);</span>
+<span class="fc" id="L674">    throw notSupported(s, targetType);</span>
   }
 
   /**
@@ -668,15 +685,15 @@ public final class NumberMethods {
    *     specified type
    */
   public static &lt;T extends Number&gt; boolean fitsInto(String s, Class&lt;T&gt; targetType) {
-<span class="fc" id="L671">    Check.notNull(targetType, &quot;target type&quot;);</span>
-<span class="fc bfc" id="L672" title="All 2 branches covered.">    if (!isEmpty(s)) {</span>
-<span class="fc" id="L673">      Predicate&lt;String&gt; tester = stringFitsInto.get(targetType);</span>
-<span class="fc bfc" id="L674" title="All 2 branches covered.">      if (tester != null) {</span>
-<span class="fc" id="L675">        return tester.test(s);</span>
+<span class="fc" id="L688">    Check.notNull(targetType, &quot;target type&quot;);</span>
+<span class="fc bfc" id="L689" title="All 2 branches covered.">    if (!isEmpty(s)) {</span>
+<span class="fc" id="L690">      Predicate&lt;String&gt; tester = stringFitsInto.get(targetType);</span>
+<span class="fc bfc" id="L691" title="All 2 branches covered.">      if (tester != null) {</span>
+<span class="fc" id="L692">        return tester.test(s);</span>
       }
-<span class="fc" id="L677">      throw notSupported(s, targetType);</span>
+<span class="fc" id="L694">      throw notSupported(s, targetType);</span>
     }
-<span class="fc" id="L679">    return false;</span>
+<span class="fc" id="L696">    return false;</span>
   }
 
   ////////////////////////////////////////////////////////////////////////////////
@@ -690,12 +707,12 @@ public final class NumberMethods {
    * @return the {@code BigDecimal} representing the number
    */
   public static BigDecimal toBigDecimal(Number n) {
-<span class="fc" id="L693">    Check.notNull(n);</span>
-<span class="fc" id="L694">    Function&lt;Number, BigDecimal&gt; fnc = toBigDecimal.get(n.getClass());</span>
-<span class="fc bfc" id="L695" title="All 2 branches covered.">    if (fnc != null) {</span>
-<span class="fc" id="L696">      return fnc.apply(n);</span>
+<span class="fc" id="L710">    Check.notNull(n);</span>
+<span class="fc" id="L711">    Function&lt;Number, BigDecimal&gt; fnc = toBigDecimal.get(n.getClass());</span>
+<span class="fc bfc" id="L712" title="All 2 branches covered.">    if (fnc != null) {</span>
+<span class="fc" id="L713">      return fnc.apply(n);</span>
     }
-<span class="fc" id="L698">    throw inputTypeNotSupported(n, BigDecimal.class);</span>
+<span class="fc" id="L715">    throw inputTypeNotSupported(n, BigDecimal.class);</span>
   }
 
   /**
@@ -713,15 +730,15 @@ public final class NumberMethods {
   @SuppressWarnings({&quot;unchecked&quot;})
   public static &lt;T extends Number, R extends Number&gt; R convert(T number,
       Class&lt;R&gt; targetType) throws TypeConversionException {
-<span class="fc" id="L716">    Check.notNull(targetType, &quot;target type&quot;);</span>
-<span class="fc bfc" id="L717" title="All 4 branches covered.">    if (number == null || number.getClass() == targetType) {</span>
-<span class="fc" id="L718">      return (R) number;</span>
+<span class="fc" id="L733">    Check.notNull(targetType, &quot;target type&quot;);</span>
+<span class="fc bfc" id="L734" title="All 4 branches covered.">    if (number == null || number.getClass() == targetType) {</span>
+<span class="fc" id="L735">      return (R) number;</span>
     }
-<span class="fc" id="L720">    UnaryOperator&lt;Number&gt; fnc = converters.get(targetType);</span>
-<span class="fc bfc" id="L721" title="All 2 branches covered.">    if (fnc != null) {</span>
-<span class="fc" id="L722">      return (R) fnc.apply(number);</span>
+<span class="fc" id="L737">    UnaryOperator&lt;Number&gt; fnc = converters.get(targetType);</span>
+<span class="fc bfc" id="L738" title="All 2 branches covered.">    if (fnc != null) {</span>
+<span class="fc" id="L739">      return (R) fnc.apply(number);</span>
     }
-<span class="fc" id="L724">    throw notSupported(number, targetType);</span>
+<span class="fc" id="L741">    throw notSupported(number, targetType);</span>
   }
 
   /**
@@ -736,15 +753,15 @@ public final class NumberMethods {
    */
   public static &lt;T extends Number&gt; boolean fitsInto(Number number,
       Class&lt;T&gt; targetType) {
-<span class="fc" id="L739">    Check.notNull(targetType, &quot;target type&quot;);</span>
-<span class="fc bfc" id="L740" title="All 2 branches covered.">    if (number == null) {</span>
-<span class="fc" id="L741">      return true;</span>
+<span class="fc" id="L756">    Check.notNull(targetType, &quot;target type&quot;);</span>
+<span class="fc bfc" id="L757" title="All 2 branches covered.">    if (number == null) {</span>
+<span class="fc" id="L758">      return true;</span>
     }
-<span class="fc" id="L743">    Predicate&lt;Number&gt; tester = numberFitsInto.get(targetType);</span>
-<span class="fc bfc" id="L744" title="All 2 branches covered.">    if (tester != null) {</span>
-<span class="fc" id="L745">      return tester.test(number);</span>
+<span class="fc" id="L760">    Predicate&lt;Number&gt; tester = numberFitsInto.get(targetType);</span>
+<span class="fc bfc" id="L761" title="All 2 branches covered.">    if (tester != null) {</span>
+<span class="fc" id="L762">      return tester.test(number);</span>
     }
-<span class="fc" id="L747">    throw inputTypeNotSupported(number, targetType);</span>
+<span class="fc" id="L764">    throw inputTypeNotSupported(number, targetType);</span>
   }
 
   /**
@@ -754,7 +771,7 @@ public final class NumberMethods {
    * @return whether the specified float's fractional part is zero or absent
    */
   public static boolean isRound(float f) {
-<span class="fc" id="L757">    return isRound(new BigDecimal(Float.toString(f)));</span>
+<span class="fc" id="L774">    return isRound(new BigDecimal(Float.toString(f)));</span>
   }
 
   /**
@@ -764,7 +781,7 @@ public final class NumberMethods {
    * @return whether the specified double's fractional part is zero or absent
    */
   public static boolean isRound(double d) {
-<span class="fc" id="L767">    return isRound(new BigDecimal(Double.toString(d)));</span>
+<span class="fc" id="L784">    return isRound(new BigDecimal(Double.toString(d)));</span>
   }
 
   /**
@@ -783,9 +800,9 @@ public final class NumberMethods {
     // through to the 3rd check. The 3rd and 4th check are
     // equivalent, but the 3rd check seems more efficient. Needs
     // to be measured though.
-<span class="fc bfc" id="L786" title="All 2 branches covered.">    return bd.scale() &lt;= 0</span>
-<span class="fc bfc" id="L787" title="All 2 branches covered.">        || bd.stripTrailingZeros().scale() == 0</span>
-<span class="fc bfc" id="L788" title="All 2 branches covered.">        || bd.divideToIntegralValue(ONE).compareTo(bd) == 0</span>
+<span class="fc bfc" id="L803" title="All 2 branches covered.">    return bd.scale() &lt;= 0</span>
+<span class="fc bfc" id="L804" title="All 2 branches covered.">        || bd.stripTrailingZeros().scale() == 0</span>
+<span class="fc bfc" id="L805" title="All 2 branches covered.">        || bd.divideToIntegralValue(ONE).compareTo(bd) == 0</span>
         /*|| bd.remainder(ONE).signum() == 0 */;
   }
 
@@ -793,66 +810,66 @@ public final class NumberMethods {
       Class&lt;?&gt; type,
       long minVal,
       long maxVal) {
-<span class="fc bfc" id="L796" title="All 2 branches covered.">    if (!isEmpty(s)) {</span>
+<span class="fc bfc" id="L813" title="All 2 branches covered.">    if (!isEmpty(s)) {</span>
       try {
-<span class="fc" id="L798">        BigDecimal bd = new BigDecimal(s);</span>
+<span class="fc" id="L815">        BigDecimal bd = new BigDecimal(s);</span>
         long l;
-<span class="fc bfc" id="L800" title="All 6 branches covered.">        if (isRound(bd) &amp;&amp; (l = bd.longValue()) &gt;= minVal &amp;&amp; l &lt;= maxVal) {</span>
-<span class="fc" id="L801">          return l;</span>
+<span class="fc bfc" id="L817" title="All 6 branches covered.">        if (isRound(bd) &amp;&amp; (l = bd.longValue()) &gt;= minVal &amp;&amp; l &lt;= maxVal) {</span>
+<span class="fc" id="L818">          return l;</span>
         }
-<span class="fc" id="L803">        throw TypeConversionException.targetTypeTooNarrow(s, type);</span>
-<span class="fc" id="L804">      } catch (NumberFormatException e) {</span>
-<span class="fc" id="L805">        throw new TypeConversionException(s, int.class, e.toString());</span>
+<span class="fc" id="L820">        throw TypeConversionException.targetTypeTooNarrow(s, type);</span>
+<span class="fc" id="L821">      } catch (NumberFormatException e) {</span>
+<span class="fc" id="L822">        throw new TypeConversionException(s, int.class, e.toString());</span>
       }
     }
-<span class="fc" id="L808">    throw new TypeConversionException(s, type);</span>
+<span class="fc" id="L825">    throw new TypeConversionException(s, type);</span>
   }
 
   private static boolean isIntegral(String s, long minVal, long maxVal) {
-<span class="fc bfc" id="L812" title="All 2 branches covered.">    if (!isEmpty(s)) {</span>
+<span class="fc bfc" id="L829" title="All 2 branches covered.">    if (!isEmpty(s)) {</span>
       try {
-<span class="fc" id="L814">        BigDecimal bd = new BigDecimal(s);</span>
+<span class="fc" id="L831">        BigDecimal bd = new BigDecimal(s);</span>
         long l;
-<span class="pc bpc" id="L816" title="2 of 6 branches missed.">        return isRound(bd) &amp;&amp; (l = bd.longValue()) &gt;= minVal &amp;&amp; l &lt;= maxVal;</span>
-<span class="nc" id="L817">      } catch (NumberFormatException ignored) {</span>
+<span class="pc bpc" id="L833" title="2 of 6 branches missed.">        return isRound(bd) &amp;&amp; (l = bd.longValue()) &gt;= minVal &amp;&amp; l &lt;= maxVal;</span>
+<span class="nc" id="L834">      } catch (NumberFormatException ignored) {</span>
       }
     }
-<span class="fc" id="L820">    return false;</span>
+<span class="fc" id="L837">    return false;</span>
   }
 
   private static OptionalInt toIntegral(String s, long minVal, long maxVal) {
-<span class="fc bfc" id="L824" title="All 2 branches covered.">    if (!isEmpty(s)) {</span>
+<span class="fc bfc" id="L841" title="All 2 branches covered.">    if (!isEmpty(s)) {</span>
       try {
-<span class="fc" id="L826">        BigDecimal bd = new BigDecimal(s);</span>
+<span class="fc" id="L843">        BigDecimal bd = new BigDecimal(s);</span>
         long l;
-<span class="pc bpc" id="L828" title="1 of 6 branches missed.">        if (isRound(bd) &amp;&amp; (l = bd.longValue()) &gt;= minVal &amp;&amp; l &lt;= maxVal) {</span>
-<span class="fc" id="L829">          return OptionalInt.of((int) l);</span>
+<span class="pc bpc" id="L845" title="1 of 6 branches missed.">        if (isRound(bd) &amp;&amp; (l = bd.longValue()) &gt;= minVal &amp;&amp; l &lt;= maxVal) {</span>
+<span class="fc" id="L846">          return OptionalInt.of((int) l);</span>
         }
-<span class="fc" id="L831">      } catch (NumberFormatException ignored) {</span>
-<span class="fc" id="L832">      }</span>
+<span class="fc" id="L848">      } catch (NumberFormatException ignored) {</span>
+<span class="fc" id="L849">      }</span>
     }
-<span class="fc" id="L834">    return OptionalInt.empty();</span>
+<span class="fc" id="L851">    return OptionalInt.empty();</span>
   }
 
   private static boolean fitsIntoLong(BigDecimal bd) {
-<span class="fc bfc" id="L838" title="All 2 branches covered.">    return isRound(bd)</span>
-<span class="fc bfc" id="L839" title="All 2 branches covered.">        &amp;&amp; bd.compareTo(MIN_LONG_BD) &gt;= 0</span>
-<span class="fc bfc" id="L840" title="All 2 branches covered.">        &amp;&amp; bd.compareTo(MAX_LONG_BD) &lt;= 0;</span>
+<span class="fc bfc" id="L855" title="All 2 branches covered.">    return isRound(bd)</span>
+<span class="fc bfc" id="L856" title="All 2 branches covered.">        &amp;&amp; bd.compareTo(MIN_LONG_BD) &gt;= 0</span>
+<span class="fc bfc" id="L857" title="All 2 branches covered.">        &amp;&amp; bd.compareTo(MAX_LONG_BD) &lt;= 0;</span>
   }
 
   private static TypeConversionException notSupported(Object obj,
       Class&lt;?&gt; type) {
-<span class="pc bpc" id="L845" title="1 of 2 branches missed.">    if (isPrimitiveNumber(type)) {</span>
-<span class="nc" id="L846">      String fmt = &quot;primitive types not supported *** call ClassMethods.box to convert %s to %s&quot;;</span>
-<span class="nc" id="L847">      String c0 = type.getName();</span>
-<span class="nc" id="L848">      String c1 = box(type).getSimpleName();</span>
-<span class="nc" id="L849">      return new TypeConversionException(obj, type, fmt, c0, c1);</span>
-<span class="fc bfc" id="L850" title="All 2 branches covered.">    } else if (isSubtype(type, Number.class)) {</span>
-<span class="fc" id="L851">      String c0 = type.getSimpleName();</span>
-<span class="fc" id="L852">      return new TypeConversionException(obj, type, &quot;%s not supported&quot;, c0);</span>
+<span class="pc bpc" id="L862" title="1 of 2 branches missed.">    if (isPrimitiveNumber(type)) {</span>
+<span class="nc" id="L863">      String fmt = &quot;primitive types not supported *** call ClassMethods.box to convert %s to %s&quot;;</span>
+<span class="nc" id="L864">      String c0 = type.getName();</span>
+<span class="nc" id="L865">      String c1 = box(type).getSimpleName();</span>
+<span class="nc" id="L866">      return new TypeConversionException(obj, type, fmt, c0, c1);</span>
+<span class="fc bfc" id="L867" title="All 2 branches covered.">    } else if (isSubtype(type, Number.class)) {</span>
+<span class="fc" id="L868">      String c0 = type.getSimpleName();</span>
+<span class="fc" id="L869">      return new TypeConversionException(obj, type, &quot;%s not supported&quot;, c0);</span>
     }
-<span class="fc" id="L854">    String msg = &quot;target type must be subclass of Number&quot;;</span>
-<span class="fc" id="L855">    return new TypeConversionException(obj, type, msg);</span>
+<span class="fc" id="L871">    String msg = &quot;target type must be subclass of Number&quot;;</span>
+<span class="fc" id="L872">    return new TypeConversionException(obj, type, msg);</span>
   }
 
 }

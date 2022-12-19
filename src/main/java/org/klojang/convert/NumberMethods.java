@@ -218,6 +218,8 @@ public final class NumberMethods {
    *
    * @param s the string to be parsed
    * @return the {@code int} value represented by the string
+   * @throws TypeConversionException if the string does not represent or number,
+   *     or if conversion would lead to loss of information
    */
   public static int parseInt(String s) throws TypeConversionException {
     return (int) parseIntegral(s, int.class, Integer.MIN_VALUE, Integer.MAX_VALUE);
@@ -256,6 +258,8 @@ public final class NumberMethods {
    *
    * @param s the string to be parsed
    * @return the {@code long} value represented by the string
+   * @throws TypeConversionException if the string does not represent or number,
+   *     or if conversion would lead to loss of information
    */
   public static long parseLong(String s) throws TypeConversionException {
     if (!isEmpty(s)) {
@@ -321,6 +325,8 @@ public final class NumberMethods {
    *
    * @param s the string to be parsed
    * @return the {@code double} value represented by the string
+   * @throws TypeConversionException if the string does not represent or number,
+   *     or if conversion would lead to loss of information
    */
   public static double parseDouble(String s) throws TypeConversionException {
     if (!isEmpty(s)) {
@@ -385,6 +391,8 @@ public final class NumberMethods {
    *
    * @param s the string to be parsed
    * @return the {@code float} value represented by the string
+   * @throws TypeConversionException if the string does not represent or number,
+   *     or if conversion would lead to loss of information
    */
   public static float parseFloat(String s) throws TypeConversionException {
     if (!isEmpty(s)) {
@@ -448,6 +456,8 @@ public final class NumberMethods {
    *
    * @param s the string to be parsed
    * @return the {@code short} value represented by the string
+   * @throws TypeConversionException if the string does not represent or number,
+   *     or if conversion would lead to loss of information
    */
   public static short parseShort(String s) throws TypeConversionException {
     return (short) parseIntegral(s, short.class, Short.MIN_VALUE, Short.MAX_VALUE);
@@ -486,6 +496,8 @@ public final class NumberMethods {
    *
    * @param s the string to be parsed
    * @return the {@code byte} value represented by the string
+   * @throws TypeConversionException if the string does not represent or number,
+   *     or if conversion would lead to loss of information
    */
   public static byte parseByte(String s) throws TypeConversionException {
     return (byte) parseIntegral(s, byte.class, Byte.MIN_VALUE, Byte.MAX_VALUE);
@@ -524,8 +536,10 @@ public final class NumberMethods {
    *
    * @param s the string to be parsed
    * @return the {@code BigInteger} value represented by the string
+   * @throws TypeConversionException if the string does not represent or number,
+   *     or if conversion would lead to loss of information
    */
-  public static BigInteger parseBigInteger(String s) {
+  public static BigInteger parseBigInteger(String s) throws TypeConversionException {
     if (!isEmpty(s)) {
       try {
         BigDecimal bd = new BigDecimal(s);
@@ -589,8 +603,9 @@ public final class NumberMethods {
    *
    * @param s the string to be parsed
    * @return the {@code BigDecimal} value represented by the string
+   * @throws TypeConversionException if the string does not represent or number
    */
-  public static BigDecimal parseBigDecimal(String s) {
+  public static BigDecimal parseBigDecimal(String s) throws TypeConversionException {
     try {
       return new BigDecimal(s);
     } catch (NumberFormatException e) {
@@ -645,6 +660,8 @@ public final class NumberMethods {
    * @param s the string to be parsed
    * @param targetType the class of the {@code Number} type
    * @return a {@code Number} of the specified type
+   * @throws TypeConversionException if the string does not represent or number,
+   *     or if conversion would lead to loss of information
    */
   @SuppressWarnings("unchecked")
   public static <T extends Number> T parse(String s, Class<T> targetType)
