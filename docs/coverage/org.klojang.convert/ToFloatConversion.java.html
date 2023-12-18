@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ToFloatConversion.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Klojang Convert</a> &gt; <a href="index.source.html" class="el_package">org.klojang.convert</a> &gt; <span class="el_source">ToFloatConversion.java</span></div><h1>ToFloatConversion.java</h1><pre class="source lang-java linenums">package org.klojang.convert;
+
+import static org.klojang.convert.NumberMethods.yes;
+import static org.klojang.convert.TypeConversionException.inputTypeNotSupported;
+
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.function.Predicate;
+
+final class ToFloatConversion {
+
+<span class="fc" id="L15">  static final BigDecimal BIG_MIN_FLOAT = new BigDecimal(Float.toString(Float.MIN_VALUE));</span>
+<span class="fc" id="L16">  static final BigDecimal BIG_MAX_FLOAT = new BigDecimal(Float.toString(Float.MAX_VALUE));</span>
+
+<span class="nc" id="L18">  private ToFloatConversion() {</span>
+<span class="nc" id="L19">    throw new UnsupportedOperationException();</span>
+  }
+
+<span class="fc" id="L22">  private static final Map&lt;Class&lt;?&gt;, Predicate&lt;Number&gt;&gt; fitsIntoFloat = Map.of(</span>
+      BigDecimal.class, ToFloatConversion::testBigDecimal,
+      BigInteger.class, ToFloatConversion::testBigInteger,
+      Double.class, ToFloatConversion::testDouble,
+<span class="fc" id="L26">      Float.class, yes(),</span>
+<span class="fc" id="L27">      Long.class, yes(),</span>
+<span class="fc" id="L28">      AtomicLong.class, yes(),</span>
+<span class="fc" id="L29">      Integer.class, yes(),</span>
+<span class="fc" id="L30">      AtomicInteger.class, yes(),</span>
+<span class="fc" id="L31">      Short.class, yes(),</span>
+<span class="fc" id="L32">      Byte.class, yes()</span>
+  );
+
+  static boolean isLossless(Number number) {
+<span class="fc" id="L36">    Predicate&lt;Number&gt; tester = fitsIntoFloat.get(number.getClass());</span>
+<span class="fc bfc" id="L37" title="All 2 branches covered.">    if (tester != null) {</span>
+<span class="fc" id="L38">      return tester.test(number);</span>
+    }
+<span class="fc" id="L40">    throw inputTypeNotSupported(number, Float.class);</span>
+  }
+
+  static float exec(Number n) {
+<span class="fc bfc" id="L44" title="All 2 branches covered.">    if (isLossless(n)) {</span>
+<span class="fc" id="L45">      return n.floatValue();</span>
+    }
+<span class="fc" id="L47">    throw new TypeConversionException(n, Float.class);</span>
+  }
+
+  private static boolean testDouble(Number n) {
+<span class="fc" id="L51">    double d = Math.abs(n.doubleValue());</span>
+<span class="fc bfc" id="L52" title="All 4 branches covered.">    return d &gt;= Float.MIN_VALUE &amp;&amp; d &lt;= Float.MAX_VALUE;</span>
+  }
+
+  private static boolean testBigInteger(Number n) {
+<span class="fc bfc" id="L56" title="All 2 branches covered.">    return new BigDecimal(((BigInteger) n).abs()).compareTo(BIG_MAX_FLOAT) &lt;= 0;</span>
+  }
+
+  private static boolean testBigDecimal(Number n) {
+<span class="fc" id="L60">    BigDecimal bd = ((BigDecimal) n).abs();</span>
+<span class="fc bfc" id="L61" title="All 4 branches covered.">    return bd.compareTo(BIG_MIN_FLOAT) &gt;= 0 &amp;&amp; bd.compareTo(BIG_MAX_FLOAT) &lt;= 0;</span>
+  }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

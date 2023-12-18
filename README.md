@@ -2,7 +2,7 @@
 
 _Klojang Convert_ contains classes aimed at converting values of one type into values of
 another type. The
-[Morph](https://klojang4j.github.io/klojang-convert/1/api/org.klojang.convert/org/klojang/convert/Morph.html)
+[Morph](https://klojang4j.github.io/klojang-convert/api/org.klojang.convert/org/klojang/convert/Morph.html)
 class is capable of converting a wide variety of input types to a wide variety of
 output types.
 
@@ -32,13 +32,13 @@ implementation group: 'org.klojang', name: 'klojang-convert', version: '1.0.6'
 ## Documentation
 
 The **Javadocs** for _Klojang Convert_ can be
-found [here](https://klojang4j.github.io/klojang-convert/1/api).
+found [here](https://klojang4j.github.io/klojang-convert/api).
 
 The latest **coverage reports** can be
-found [here](https://klojang4j.github.io/klojang-convert/1/coverage).
+found [here](https://klojang4j.github.io/klojang-convert/coverage).
 
 The latest **vulnerabilities report** can be found
-[here](https://klojang4j.github.io/klojang-convert/1/vulnerabilities/dependency-check-report.html).
+[here](https://klojang4j.github.io/klojang-convert/vulnerabilities/dependency-check-report.html).
 
 ## Conversion Table
 
@@ -59,6 +59,6 @@ The latest **vulnerabilities report** can be found
 | ?                 | `U[]`       | `new U[] { val }`                                          |
 
 
-*) [org.klojang.util.collection.IntList](https://klojang4j.github.io/klojang-util/1/api/org.klojang.util/org/klojang/util/collection/IntList.html)
+*) [org.klojang.util.collection.IntList](https://klojang4j.github.io/klojang-util/api/org.klojang.util/org/klojang/util/collection/IntList.html)
 
 
