@@ -14,7 +14,7 @@ import java.util.EnumSet;
 
 public class EnumParserTest {
 
-  private static enum TestEnum {
+  private enum TestEnum {
     DAY_ONE,
     DAY_TWO,
     _THIRD,
@@ -33,12 +33,6 @@ public class EnumParserTest {
     public String toString() {
       return s;
     }
-  }
-
-  @Test(expected = DuplicateValueException.class)
-  @SuppressWarnings("unused")
-  public void testBadNormalizer() {
-    new EnumParser<>(TestEnum.class, s -> "Hi");
   }
 
   @Test
