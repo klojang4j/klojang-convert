@@ -61,7 +61,7 @@ public class Morph<T> {
       return getTypeDefault(toType);
     } else if (toType.isInstance(obj)) {
       return (T) obj;
-    } else if (isAutoUnboxedAs(obj.getClass(), toType)) {
+    } else if (toType.isPrimitive() && isAutoUnboxedAs(obj.getClass(), toType)) {
       return (T) obj;
     } else if (toType == String.class) {
       if (obj instanceof byte[] bytes) {

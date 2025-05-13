@@ -95,7 +95,7 @@ final class MorphToCollection {
     if (fromArray instanceof Object[] objs) {
       ((Collection) toCollection).addAll(Arrays.asList(objs));
     } else {
-      ((Collection) toCollection).addAll(CollectionMethods.listify(fromArray));
+      ((Collection) toCollection).addAll(CollectionMethods.asList(fromArray));
     }
   }
 

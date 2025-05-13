@@ -95,7 +95,7 @@ final class MorphToCollection {
 <span class="pc bpc" id="L95" title="1 of 2 branches missed.">    if (fromArray instanceof Object[] objs) {</span>
 <span class="fc" id="L96">      ((Collection) toCollection).addAll(Arrays.asList(objs));</span>
     } else {
-<span class="nc" id="L98">      ((Collection) toCollection).addAll(CollectionMethods.listify(fromArray));</span>
+<span class="nc" id="L98">      ((Collection) toCollection).addAll(CollectionMethods.asList(fromArray));</span>
     }
 <span class="fc" id="L100">  }</span>
 

@@ -61,7 +61,7 @@ public class Morph&lt;T&gt; {
 <span class="nc" id="L61">      return getTypeDefault(toType);</span>
 <span class="fc bfc" id="L62" title="All 2 branches covered.">    } else if (toType.isInstance(obj)) {</span>
 <span class="fc" id="L63">      return (T) obj;</span>
-<span class="fc bfc" id="L64" title="All 2 branches covered.">    } else if (isAutoUnboxedAs(obj.getClass(), toType)) {</span>
+<span class="fc bfc" id="L64" title="All 4 branches covered.">    } else if (toType.isPrimitive() &amp;&amp; isAutoUnboxedAs(obj.getClass(), toType)) {</span>
 <span class="fc" id="L65">      return (T) obj;</span>
 <span class="pc bpc" id="L66" title="1 of 2 branches missed.">    } else if (toType == String.class) {</span>
 <span class="nc bnc" id="L67" title="All 2 branches missed.">      if (obj instanceof byte[] bytes) {</span>

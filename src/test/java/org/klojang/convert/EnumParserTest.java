@@ -1,16 +1,15 @@
 package org.klojang.convert;
 
+import org.junit.Test;
+
+import java.time.DayOfWeek;
+import java.util.EnumSet;
+
 import static java.time.DayOfWeek.MONDAY;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 import static org.klojang.convert.EnumParser.DEFAULT_NORMALIZER;
 import static org.klojang.convert.EnumParser.ParseTarget.*;
-
-import org.junit.Test;
-import org.klojang.check.aux.DuplicateValueException;
-
-import java.time.DayOfWeek;
-import java.util.EnumSet;
 
 public class EnumParserTest {
 

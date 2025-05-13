@@ -7,7 +7,7 @@ Klojang Convert,org.klojang.convert,EnumParser,15,213,0,18,4,31,0,19,0,10
 Klojang Convert,org.klojang.convert,MorphToArray,7,168,1,21,2,40,2,16,1,6
 Klojang Convert,org.klojang.convert,EnumParser.ParseTarget,0,27,0,0,0,5,0,1,0,1
 Klojang Convert,org.klojang.convert,ToLongConversion,3,127,4,22,1,29,5,16,1,7
-Klojang Convert,org.klojang.convert,Morph,58,92,12,16,13,27,9,9,0,4
+Klojang Convert,org.klojang.convert,Morph,58,95,12,18,13,27,9,10,0,4
 Klojang Convert,org.klojang.convert,MorphToCollection,45,165,2,12,10,36,8,16,6,11
 Klojang Convert,org.klojang.convert,ToDoubleConversion,6,74,0,8,2,20,1,9,1,5
 Klojang Convert,org.klojang.convert,ToByteConversion,36,134,7,21,5,15,7,20,3,10
