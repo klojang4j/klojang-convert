@@ -19,23 +19,23 @@ To use _Klojang Convert_, add the following dependency to your Maven POM file:
 <dependency>
     <groupId>org.klojang</groupId>
     <artifactId>klojang-convert</artifactId>
-    <version>21.3.0</version>
+    <version>24.0.0</version>
 </dependency>
 ```
 
 or Gradle build script:
 
 ```
-implementation group: 'org.klojang', name: 'klojang-convert', version: '21.3.0'
+implementation group: 'org.klojang', name: 'klojang-convert', version: '24.0.0'
 ```
 
 ## Documentation
 
 The **Javadocs** for _Klojang Convert_ can be
-found [here](https://klojang4j.github.io/klojang-convert/api).
+found [here](https://klojang4j.github.io/klojang-convert/24/api).
 
 The latest **coverage reports** can be
-found [here](https://klojang4j.github.io/klojang-convert/coverage).
+found [here](https://klojang4j.github.io/klojang-convert/24/coverage).
 
 ## Conversion Table
 
