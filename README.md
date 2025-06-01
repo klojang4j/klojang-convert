@@ -1,14 +1,6 @@
 # Klojang Invoke
 
-_Klojang Convert_ contains classes aimed at converting values of one type into values of
-another type. The
-[Morph](https://klojang4j.github.io/klojang-convert/api/org.klojang.convert/org/klojang/convert/Morph.html)
-class is capable of converting a wide variety of input types to a wide variety of
-output types.
-
-_Klojang Invoke_ is mainly intended as a supporting library for
-[Klojang Invoke](https://github.com/klojang4j/klojang-invoke) where it is used to enable
-loosely typed bean writing.
+Supporting library for other Klojang projects.
 
 ## Getting Started
 
@@ -19,14 +11,14 @@ To use _Klojang Convert_, add the following dependency to your Maven POM file:
 <dependency>
     <groupId>org.klojang</groupId>
     <artifactId>klojang-convert</artifactId>
-    <version>24.1.0</version>
+    <version>24.2.0</version>
 </dependency>
 ```
 
 or Gradle build script:
 
 ```
-implementation group: 'org.klojang', name: 'klojang-convert', version: '24.1.0'
+implementation group: 'org.klojang', name: 'klojang-convert', version: '24.2.0'
 ```
 
 ## Documentation

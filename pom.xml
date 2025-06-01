@@ -7,7 +7,7 @@
 
     <groupId>org.klojang</groupId>
     <artifactId>klojang-convert</artifactId>
-    <version>24.1.0</version>
+    <version>24.2.0</version>
     <packaging>jar</packaging>
 
     <name>Klojang Convert</name>
@@ -82,8 +82,8 @@
         <!-- *** Check for updates: mvn versions:display-dependency-updates   *** -->
         <!-- *** Check dependencies: mvn dependency:analyze                   *** -->
         <!-- ==================================================================== -->
-        <klojang-check.version>24.1.0</klojang-check.version>
-        <klojang-util.version>24.1.0</klojang-util.version>
+        <klojang-check.version>24.2.0</klojang-check.version>
+        <klojang-util.version>24.2.0</klojang-util.version>
         <junit.version>4.13.2</junit.version>
     </properties>
 
