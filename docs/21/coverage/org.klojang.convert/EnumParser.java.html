@@ -7,7 +7,7 @@ import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
 
 import static org.klojang.check.CommonChecks.*;
-import static org.klojang.convert.EnumParser.ParseTarget.*;
+import static org.klojang.convert.EnumParser.ParseInput.*;
 import static org.klojang.convert.NumberMethods.isIntegral;
 
 /**
@@ -111,22 +111,22 @@ public final class EnumParser&lt;T extends Enum&lt;T&gt;&gt; {
    *
    * @param enumClass the enum class managed by this {@code EnumParser}
    * @param normalizer the normalization function
-   * @param parseTargets the aspects of an enum constant that the values to be
+   * @param attributes the aspects of an enum constant that the values to be
    *       converted may represent (the constant's name, ordinal value, string
    *       representation, or the constant itself).
    */
   public EnumParser(Class&lt;T&gt; enumClass, UnaryOperator&lt;String&gt; normalizer,
-<span class="fc" id="L119">        Set&lt;ParseTarget&gt; parseTargets) {</span>
+<span class="fc" id="L119">        Set&lt;ParseTarget&gt; attributes) {</span>
 <span class="fc" id="L120">    this.enumClass = Check.notNull(enumClass, &quot;enumClass&quot;).ok();</span>
 <span class="fc" id="L121">    this.normalizer = Check.notNull(normalizer, &quot;normalizer&quot;).ok();</span>
-<span class="fc" id="L122">    this.targets = Check.that(parseTargets, &quot;parseTargets&quot;).is(deepNotEmpty()).ok();</span>
+<span class="fc" id="L122">    this.targets = Check.that(attributes, &quot;attributes&quot;).is(deepNotEmpty()).ok();</span>
 <span class="fc" id="L123">    HashMap&lt;String, T&gt; tmp = new HashMap&lt;&gt;();</span>
-<span class="fc bfc" id="L124" title="All 2 branches covered.">    if (parseTargets.contains(NAME)) {</span>
+<span class="fc bfc" id="L124" title="All 2 branches covered.">    if (attributes.contains(NAME)) {</span>
 <span class="fc bfc" id="L125" title="All 2 branches covered.">      for (T e : enumClass.getEnumConstants()) {</span>
 <span class="fc" id="L126">        tmp.put(normalize(e.name()), e);</span>
       }
     }
-<span class="fc bfc" id="L129" title="All 2 branches covered.">    if (parseTargets.contains(TO_STRING)) {</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">    if (attributes.contains(TO_STRING)) {</span>
 <span class="fc bfc" id="L130" title="All 2 branches covered.">      for (T e : enumClass.getEnumConstants()) {</span>
 <span class="fc" id="L131">        tmp.put(normalize(e.toString()), e);</span>
       }

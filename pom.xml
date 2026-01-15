@@ -7,7 +7,7 @@
 
     <groupId>org.klojang</groupId>
     <artifactId>klojang-convert</artifactId>
-    <version>24.2.0</version>
+    <version>24.2.1</version>
     <packaging>jar</packaging>
 
     <name>Klojang Convert</name>

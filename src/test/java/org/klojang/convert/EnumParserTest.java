@@ -9,7 +9,7 @@ import static java.time.DayOfWeek.MONDAY;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 import static org.klojang.convert.EnumParser.DEFAULT_NORMALIZER;
-import static org.klojang.convert.EnumParser.ParseTarget.*;
+import static org.klojang.convert.EnumParser.ParseInput.*;
 
 public class EnumParserTest {
 
